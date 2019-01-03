@@ -2,4 +2,6 @@
     <string name="app_name">NotificationCompat</string>
     <string name="open_notification_settings">打开通知栏设置页面</string>
     <string name="notification_open_status">通知开启状态：%s</string>
+    <string name="notification_channel_id_default">1000</string>
+    <string name="notification_channel_name_default">自定义channel</string>
 </resources>
