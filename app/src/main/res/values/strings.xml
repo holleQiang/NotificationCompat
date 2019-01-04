@@ -4,4 +4,5 @@
     <string name="notification_open_status">通知开启状态：%s</string>
     <string name="notification_channel_id_default">1000</string>
     <string name="notification_channel_name_default">自定义channel</string>
+    <string name="send_notification">发送通知</string>
 </resources>

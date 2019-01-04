@@ -1,5 +1,6 @@
 package com.zq.notificationcompat;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -7,12 +8,17 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
+import com.zq.notificationcompat.utils.NotificationUtils;
 import com.zq.utils.StringUtil;
 
 import java.lang.reflect.Field;
@@ -79,9 +85,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.bt_open_notification_settings)
-    public void onViewClicked() {
-        startActivityForResult(NotificationUtils.newOpenNotificationSettingsIntent(this),REQUEST_CODE_OPEN_NOTIFICATION_SETTINGS);
+    @OnClick({R.id.bt_open_notification_settings,R.id.bt_send_notification})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.bt_send_notification:
+                Notification notification = new NotificationCompat.Builder(this, getResources().getString(R.string.notification_channel_id_default))
+                        .setContentTitle("通知标题")
+                        .setContentInfo("通知内容")
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setSmallIcon(R.drawable.ic_nitification_small)
+                        .build();
+                NotificationManagerCompat.from(this).notify(0,notification);
+                break;
+            case R.id.bt_open_notification_settings:
+                NotificationUtils.openNotificationSettings(this.getApplicationContext());
+                break;
+        }
     }
 
     public void refreshOpenStatus() {
