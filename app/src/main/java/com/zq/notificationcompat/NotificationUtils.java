@@ -37,8 +37,10 @@ public class NotificationUtils {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            if("MI 6".equalsIgnoreCase(Build.MODEL)){
-                //小米6 单独跳应用详情页面
+            String model = Build.MODEL;
+            if("MI 6X".equalsIgnoreCase(model)
+                    || "Redmi Note 5".equalsIgnoreCase(model)){
+                //小米6 红米5单独跳应用详情页面
                 return newOpenAppDetailIntent(context);
             }
 

@@ -1,27 +1,21 @@
 package com.zq.notificationcompat;
 
-import android.app.Activity;
-import android.app.AppOpsManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.net.Uri;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.zq.utils.StatusbarUtil;
 import com.zq.utils.StringUtil;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import butterknife.BindView;
@@ -42,14 +36,33 @@ public class MainActivity extends AppCompatActivity {
         refreshOpenStatus();
 
         try {
-//            Class<?> aClass = Class.forName("com.android.settings.Settings$NotificationFilterActivity");
-            Class<?> aClass = Class.forName("com.zq.notificationcompat.MainActivity");
+            Context mmsCtx = createPackageContext("com.android.settings",
+                    Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
+            PackageInfo packageInfo = mmsCtx.getPackageManager().getPackageInfo(mmsCtx.getPackageName(), PackageManager.GET_ACTIVITIES);
+            ActivityInfo[] activities = packageInfo.activities;
+            for (ActivityInfo activity : activities) {
+                if ("com.android.settings.Settings$AppNotificationSettingsActivity".equals(activity.targetActivity)) {
+                    System.out.println("^^^^^^^^^^^^^^^^" + activity.targetActivity);
+                }
+            }
+            Class<?> aClass = Class.forName("com.android.settings.Settings$NotificationFilterActivity",true,mmsCtx.getClassLoader());
+//            Class<?> aClass = Class.forName("com.zq.notificationcompat.MainActivity");
+            Intent intent = new Intent(mmsCtx, aClass);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mmsCtx.startActivity(intent);
             Field[] declaredFields = aClass.getDeclaredFields();
             for (Field declaredField : declaredFields) {
                 String name = declaredField.getName();
                 System.out.println("=================" + name);
             }
+            Method[] methods = aClass.getDeclaredMethods();
+            for (Method method : methods) {
+                String name = method.getName();
+                System.out.println("********************" + name);
+            }
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
