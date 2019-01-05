@@ -17,6 +17,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zq.notificationcompat.utils.NotificationUtils;
 import com.zq.utils.StringUtil;
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.bt_open_notification_settings,R.id.bt_send_notification})
+    @OnClick({R.id.bt_open_notification_settings,R.id.bt_send_notification,R.id.bt_open_all_notification_settings})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_send_notification:
@@ -100,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_open_notification_settings:
                 NotificationUtils.openNotificationSettings(this.getApplicationContext());
+                break;
+            case R.id.bt_open_all_notification_settings:
+                Toast.makeText(this, "未实现", Toast.LENGTH_SHORT).show();
+//                NotificationUtils.openNotificationList(this.getApplicationContext());
                 break;
         }
     }

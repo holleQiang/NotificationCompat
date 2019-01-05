@@ -204,4 +204,10 @@ public class NotificationUtils {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
     }
+
+//    public static void openNotificationList(Context context){
+//        Intent intent = new Intent("android.settings.ALL_APPS_NOTIFICATION_SETTINGS");
+//        setIntentFlags(context,intent);
+//        context.startActivity(intent);
+//    }
 }

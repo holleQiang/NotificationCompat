@@ -21,10 +21,16 @@
         android:text="@string/open_notification_settings" />
 
     <Button
+        android:id="@+id/bt_open_all_notification_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/open_all_notification_settings" />
+
+    <Button
         android:id="@+id/bt_send_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/send_notification" />
 
-
+    x
 </LinearLayout>

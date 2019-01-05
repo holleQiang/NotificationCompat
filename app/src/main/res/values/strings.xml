@@ -5,4 +5,5 @@
     <string name="notification_channel_id_default">1000</string>
     <string name="notification_channel_name_default">自定义channel</string>
     <string name="send_notification">发送通知</string>
+    <string name="open_all_notification_settings">打开所有app通知设置页面</string>
 </resources>
